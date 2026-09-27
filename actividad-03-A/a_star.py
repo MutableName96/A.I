@@ -79,6 +79,7 @@ class AStarGUI:
     COLOR_LIGHT = "#f1faee"      # Blanco crema
     COLOR_START = "#16db65"      # Verde inicio
     COLOR_GOAL = "#e01e37"       # Rojo meta
+    COLOR_OBSTACLE = "#1d3557"   # Color obstáculo
 
     def __init__(self, root):
         """
@@ -105,9 +106,11 @@ class AStarGUI:
         self.cost_diag_var = tk.StringVar(value="14")
 
         # Control del estado del tablero
-        self.phase = "SETUP_POINTS"  # 'SETUP_POINTS' -> siguiente paso será 'SETUP_OBSTACLES'
+        # 'SETUP_POINTS' -> 'SETUP_OBSTACLES' -> 'READY_TO_RUN'
+        self.phase = "SETUP_POINTS"
         self.start_pos = None
         self.goal_pos = None
+        self.obstacles = set()
 
         # Tamaño en píxeles de cada cuadro de la cuadrícula
         self.cell_size = 40
@@ -194,7 +197,7 @@ class AStarGUI:
             messagebox.showerror("Error", "Ingresa números válidos en todos los campos.")
 
     def _build_grid_view(self):
-        """Dibuja la cuadrícula y el panel lateral para seleccionar y confirmar Inicio y Meta."""
+        """Dibuja la cuadrícula y el panel lateral para interacción."""
         self.root.title(f"A* - Tablero ({self.rows}x{self.cols})")
 
         container = tk.Frame(self.root, padx=15, pady=15, bg=self.COLOR_LIGHT)
@@ -226,7 +229,7 @@ class AStarGUI:
             fg=self.COLOR_PRIMARY,
             font=("Arial", 9, "bold"),
             justify="left",
-            wraplength=200
+            wraplength=220
         )
         self.lbl_instructions.pack(pady=(0, 15))
 
@@ -246,10 +249,27 @@ class AStarGUI:
         )
         self.btn_confirm_points.pack(fill="x")
 
+        # Botón para confirmar los obstáculos
+        self.btn_confirm_obstacles = tk.Button(
+            side_panel,
+            text="Confirmar Obstáculos",
+            command=self._confirm_obstacles,
+            bg=self.COLOR_SECONDARY,
+            fg=self.COLOR_LIGHT,
+            font=("Arial", 9, "bold"),
+            relief="flat",
+            bd=0,
+            padx=10,
+            pady=8,
+            cursor="hand2",
+            state="disabled"
+        )
+        self.btn_confirm_obstacles.pack(fill="x", pady=(10, 0))
+
         self._draw_grid()
 
     def _draw_grid(self):
-        """Redibuja las casillas de la matriz aplicando colores de Inicio y Meta si están definidos."""
+        """Redibuja las casillas de la matriz aplicando colores de Inicio, Meta y Obstáculos."""
         self.canvas.delete("all")
         for r in range(self.rows):
             for c in range(self.cols):
@@ -263,6 +283,8 @@ class AStarGUI:
                     color = self.COLOR_START
                 elif (r, c) == self.goal_pos:
                     color = self.COLOR_GOAL
+                elif (r, c) in self.obstacles:
+                    color = self.COLOR_OBSTACLE
 
                 self.canvas.create_rectangle(
                     x1, y1, x2, y2,
@@ -272,7 +294,7 @@ class AStarGUI:
                 )
 
     def _on_canvas_click(self, event):
-        """Maneja los clics para asignar y reubicar Inicio y Meta."""
+        """Maneja los clics según la fase activa (Puntos u Obstáculos)."""
         col = event.x // self.cell_size
         row = event.y // self.cell_size
 
@@ -281,6 +303,7 @@ class AStarGUI:
 
         cell = (row, col)
 
+        # Fase 1: Selección de Inicio y Meta
         if self.phase == "SETUP_POINTS":
             if self.start_pos is None:
                 self.start_pos = cell
@@ -295,19 +318,50 @@ class AStarGUI:
 
             self._draw_grid()
 
+        # Fase 2: Colocación de Obstáculos
+        elif self.phase == "SETUP_OBSTACLES":
+            # No permitir sobreescribir el inicio ni la meta
+            if cell == self.start_pos or cell == self.goal_pos:
+                return
+
+            # Alternar estado del obstáculo
+            if cell in self.obstacles:
+                self.obstacles.remove(cell)
+            else:
+                self.obstacles.add(cell)
+
+            self._draw_grid()
+
     def _confirm_points(self):
-        """Valida que ambos puntos existan antes de avanzar."""
+        """Valida que ambos puntos existan y habilita el modo de obstáculos."""
         if self.start_pos is None or self.goal_pos is None:
             messagebox.showwarning("Atención", "Debes seleccionar tanto el punto de Inicio como la Meta antes de continuar.")
             return
+
+        self.phase = "SETUP_OBSTACLES"
 
         self.btn_confirm_points.config(
             text="Puntos Confirmados ✔",
             state="disabled",
             bg=self.COLOR_PRIMARY
         )
+        self.btn_confirm_obstacles.config(
+            state="normal"
+        )
         self.lbl_instructions.config(
-            text=f"Inicio fijado en: {self.start_pos}\nMeta fijada en: {self.goal_pos}\n\n a chambear.png"
+            text=f"Inicio: {self.start_pos}\nMeta: {self.goal_pos}\n\nModo Obstáculos:\nHaz clic en las casillas para poner o quitar muros.\nAl terminar, pulsa 'Confirmar Obstáculos'."
+        )
+
+    def _confirm_obstacles(self):
+        """Fija los obstáculos y prepara el entorno para el algoritmo."""
+        self.phase = "READY_TO_RUN"
+        self.btn_confirm_obstacles.config(
+            text="Obstáculos Confirmados ✔",
+            state="disabled",
+            bg=self.COLOR_PRIMARY
+        )
+        self.lbl_instructions.config(
+            text=f"Obstáculos fijados: {len(self.obstacles)}\n\nListo para ejecutar A*."
         )
 
 
