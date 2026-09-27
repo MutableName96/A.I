@@ -253,6 +253,26 @@ Para cada escenario del inicio:
 
 | Escenario | Tras tu EDA, ¿qué fila de la guía aplica? | Modelo que propondrías | 2 condiciones del dataset que deben cumplirse |
 | :---: | :--- | :--- | :--- |
-| **P1** | | | |
-| **P2** | | | |
-| **P3** | | | |
+| **P1** |Y binaria muy desbalanceada/Clasificación |Random Forest |División por partidas completas y Muestreo |
+| **P2** |Y numérica (score final)/Regresión |	Regresión lineal | Granularidad y Tratamiento de la distribución |
+| **P3** | Y categórica multiclase (tipo obstáculo)/Clasificación multiclase| Logística multinomial|Granularidad y Estratificación |
+
+Primero pediría un dataset bien organizado por partidas con su id y limpio de datos basura o congelados solo después del EDA propondría un Random Forest con balanceo de clases por la principal razon que no se vuelve loco con datos chuecos esto porque el EDA nos demostró que las muertes son menos del 1% y que los frames van pegados en el tiempo así evitamos que el modelo haga trampa memorizando la misma corrida y nos aseguramos de que aprenda a jugar de verdad
+
+
+## Misión 6: Contraejemplo — cuándo no usar un modelo
+    A veces el EDA dice: aún no hay datos suficientes o la pregunta está mal planteada.
+
+1. Describe un escenario del dino donde un árbol profundo parecería buena idea pero el EDA lo desaconsejaría.
+
+Un árbol profundo puede aprender reglas exactas combinando posición, salto, distancia y velocidad para memorizar cada obstáculo al detalle.
+En el EDA vimos que teníamos muy pocas partidas registradas por lo que usar este modelo nos daría un sobreajuste brutal. Y en cuanto el dinosaurio juegue una partida nueva con un milisegundo de retraso o una distancia no vista, el árbol fallará de inmediato.
+
+
+2. Describe un escenario donde una red neuronal tendría sentido y qué deberías ver en el EDA para justificarla.
+
+    Tener primero un gran volumen de datos masivo y no linealidades complejas y tener series y secuencias 
+
+3. ¿Se podría resolver P1 con reglas fijas (```si dist_obstacle < X y jump=0 entonces muerte```)? Compara con un modelo aprendido: ventajas y límites.
+
+    si se podria seria un bot sencillo aunque no cumpliria todos los ecenarios como por ejemplo el del pajaro donde no es necesario saltar y no vas a morir por eso 
