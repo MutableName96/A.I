@@ -77,7 +77,8 @@ class AStarGUI:
     COLOR_SECONDARY = "#457b9d"  # Azul medio
     COLOR_ACCENT = "#a8dadc"     # Azul celeste
     COLOR_LIGHT = "#f1faee"      # Blanco crema
-    COLOR_HIGHLIGHT = "#e63946"  # Rojo / Alertas
+    COLOR_START = "#16db65"      # Verde inicio
+    COLOR_GOAL = "#e01e37"       # Rojo meta
 
     def __init__(self, root):
         """
@@ -102,6 +103,11 @@ class AStarGUI:
         self.cols_var = tk.StringVar(value="12")
         self.cost_straight_var = tk.StringVar(value="10")
         self.cost_diag_var = tk.StringVar(value="14")
+
+        # Control del estado del tablero
+        self.phase = "SETUP_POINTS"  # 'SETUP_POINTS' -> siguiente paso será 'SETUP_OBSTACLES'
+        self.start_pos = None
+        self.goal_pos = None
 
         # Tamaño en píxeles de cada cuadro de la cuadrícula
         self.cell_size = 40
@@ -188,13 +194,13 @@ class AStarGUI:
             messagebox.showerror("Error", "Ingresa números válidos en todos los campos.")
 
     def _build_grid_view(self):
-        """Dibuja únicamente la cuadrícula en blanco según las dimensiones M x N especificadas."""
+        """Dibuja la cuadrícula y el panel lateral para seleccionar y confirmar Inicio y Meta."""
         self.root.title(f"A* - Tablero ({self.rows}x{self.cols})")
 
         container = tk.Frame(self.root, padx=15, pady=15, bg=self.COLOR_LIGHT)
         container.pack()
 
-        # Canvas calculado dinámicamente con ancho = columnas y alto = filas
+        # Canvas interactivo
         canvas_width = self.cols * self.cell_size
         canvas_height = self.rows * self.cell_size
 
@@ -206,9 +212,45 @@ class AStarGUI:
             highlightthickness=2,
             highlightbackground=self.COLOR_PRIMARY
         )
-        self.canvas.pack()
+        self.canvas.grid(row=0, column=0, padx=(0, 15))
+        self.canvas.bind("<Button-1>", self._on_canvas_click)
 
-        # Dibujar casillas de la matriz M x N
+        # Panel lateral de control
+        side_panel = tk.Frame(container, bg=self.COLOR_LIGHT)
+        side_panel.grid(row=0, column=1, sticky="n")
+
+        self.lbl_instructions = tk.Label(
+            side_panel,
+            text="1er clic: Inicio (Verde)\n2do clic: Meta (Rojo)\n\nPuedes dar clic sobre ellos para reubicarlos.",
+            bg=self.COLOR_LIGHT,
+            fg=self.COLOR_PRIMARY,
+            font=("Arial", 9, "bold"),
+            justify="left",
+            wraplength=200
+        )
+        self.lbl_instructions.pack(pady=(0, 15))
+
+        # Botón para confirmar las posiciones elegidas
+        self.btn_confirm_points = tk.Button(
+            side_panel,
+            text="Confirmar Inicio y Meta",
+            command=self._confirm_points,
+            bg=self.COLOR_SECONDARY,
+            fg=self.COLOR_LIGHT,
+            font=("Arial", 9, "bold"),
+            relief="flat",
+            bd=0,
+            padx=10,
+            pady=8,
+            cursor="hand2"
+        )
+        self.btn_confirm_points.pack(fill="x")
+
+        self._draw_grid()
+
+    def _draw_grid(self):
+        """Redibuja las casillas de la matriz aplicando colores de Inicio y Meta si están definidos."""
+        self.canvas.delete("all")
         for r in range(self.rows):
             for c in range(self.cols):
                 x1 = c * self.cell_size
@@ -216,12 +258,57 @@ class AStarGUI:
                 x2 = x1 + self.cell_size
                 y2 = y1 + self.cell_size
 
+                color = self.COLOR_LIGHT
+                if (r, c) == self.start_pos:
+                    color = self.COLOR_START
+                elif (r, c) == self.goal_pos:
+                    color = self.COLOR_GOAL
+
                 self.canvas.create_rectangle(
                     x1, y1, x2, y2,
-                    fill=self.COLOR_LIGHT,
+                    fill=color,
                     outline=self.COLOR_ACCENT,
                     width=1
                 )
+
+    def _on_canvas_click(self, event):
+        """Maneja los clics para asignar y reubicar Inicio y Meta."""
+        col = event.x // self.cell_size
+        row = event.y // self.cell_size
+
+        if not (0 <= row < self.rows and 0 <= col < self.cols):
+            return
+
+        cell = (row, col)
+
+        if self.phase == "SETUP_POINTS":
+            if self.start_pos is None:
+                self.start_pos = cell
+            elif self.goal_pos is None and cell != self.start_pos:
+                self.goal_pos = cell
+            elif cell == self.start_pos:
+                self.start_pos = None
+            elif cell == self.goal_pos:
+                self.goal_pos = None
+            else:
+                self.goal_pos = cell
+
+            self._draw_grid()
+
+    def _confirm_points(self):
+        """Valida que ambos puntos existan antes de avanzar."""
+        if self.start_pos is None or self.goal_pos is None:
+            messagebox.showwarning("Atención", "Debes seleccionar tanto el punto de Inicio como la Meta antes de continuar.")
+            return
+
+        self.btn_confirm_points.config(
+            text="Puntos Confirmados ✔",
+            state="disabled",
+            bg=self.COLOR_PRIMARY
+        )
+        self.lbl_instructions.config(
+            text=f"Inicio fijado en: {self.start_pos}\nMeta fijada en: {self.goal_pos}\n\n a chambear.png"
+        )
 
 
 # =============================================================================
