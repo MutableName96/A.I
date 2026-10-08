@@ -152,6 +152,8 @@ Si usted fuera responsable del proyecto:
 Justifique ampliamente su respuesta.
 
 > **Respuesta:**  
+Depende de lo que quisiera hacer, si ayudar al cliente a que entienda     exactamente el porque de su rechazo o arriesgarnos a que no se nos pague aun cuando el modelo decidio que si se le deberia dar un credito o simplemente queremos mejores resultados con nuestros jefes o para la empresa podriamos obtar por no dar tantas explicaciones y que el numero dados de creditos sean menor o con clientes mas selectos excluyendo a gente que si pagarian perdiendo estos clientes   
+
 > 
 
 ---
@@ -170,4 +172,5 @@ Relacione su respuesta con los siguientes conceptos:
 - **Consecuencias de una decisión incorrecta**
 
 > **Respuesta:**  
+Bueno si es verdad que hasta sierto punto tenemos una similitud con los modelos en algunos ecenarios pero es verdad que no son buenos para todos los ecenarios porque en problemas en que podemos optar por sacrificar presicion porque no es tan grande problema o la consecuencia de hacer sacrificios a problemas donde concebir un solo sacrificio puede llevar a problemas mayores,y tambien aunque un modelo sea mejor con su presicion de datos no sitrve de nada si no podemos interpretarlos como en el ejemplo de la escuela si el objetivo es ayudar a los alumnos subseptibles a reprobar es importante saber el por que porque se tienen que hacer cambios en el rumbo que se lleva porque por algo van reprobando y no nos serviria de nada solo saber que vamos a tener un indice alto de reprobados, no todos pueden permitirse tener una gran cantidad de datos para empezar tomando el ejemplo anterior de la escuela no es lo mismo el historial de una materia de la primera unidad a la ultima unidad de un alumno o el primer año al ultimo año de escuela , asu vez, modelos con mayor presicion necesitan mas datos para empezar a dar predicciones acertadas cosas que en problemas nuevos o mas complejos hay pocos o muy aleatorios con gran diferencia entre dato y dato, y tomar una mala de eleccion por un modelo mal entrenado puede afectar en nuestro mundo real  
 >
