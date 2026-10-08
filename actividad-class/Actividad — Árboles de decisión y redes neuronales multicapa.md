@@ -46,7 +46,7 @@ los pesos nos indican que tanta importancia tiene esa caracteristicas en la neur
 Explique qué elementos aprende cada modelo.
 
 > **Respuesta:**  
-La principal diferencia es que una red neuranal endrente las epocas
+La principal diferencia es que una red neuranal son que aqui tenemos las epocas que nos permiten ir ajustando nuestras predicciones en cada epoca
 > 
 
 ---
@@ -66,7 +66,11 @@ El sistema dispone de información como:
 Analice las ventajas y desventajas de utilizar un árbol de decisión y una red neuronal multicapa.  
 ¿Cuál utilizaría y por qué?
 
+
 > **Respuesta:**  
+    un arbol de decisiones seria mas rapido para decidir si una transaccion es fraude o no y asu vez nos podria mostrar el proceso que llevo para saber si es fraude o no aunque es mas rigido ante cambios a su ves las redes neuronales multicapa nos resolveria estos cambios pero el volumen de datos de entrada tendria que ser mayor para que pueda dar resultados precisos.
+    Yo en lo personal optaria arbol de desicion ya que es mas facil y eficiente detectar compras anormalas con estos datos
+
 > 
 
 ---
@@ -84,6 +88,8 @@ Suponga que un árbol de decisión y una red neuronal obtienen prácticamente la
 ¿Qué otros factores tomaría en cuenta para elegir uno de los dos modelos? Justifique su respuesta.
 
 > **Respuesta:**  
+Tomaria en cuenta el costo de cada modelo en primero para poder saber el que tiene un costo operacionl mas grande, asu vez,  su adaptabilidad frente a nuevos cambios si en algun futuro la administracion quisiera hacer cambios en sus estrategias y tal vez el mas importante seria la interpretaccion de los datos ya que las redes neuronales al ser de caja negra no podria decirnos la razon por la que el alumno estaria reprobando esta info es valiosa para educadores para ajustar sus estrategias de aprendizaje .
+
 > 
 
 ---
@@ -102,7 +108,10 @@ Una red neuronal obtiene mejores resultados que un árbol de decisión, pero res
 Analice las consecuencias que podría tener esta decisión.
 
 > **Respuesta:**  
+En este caso preferia la precision, por el tema delicado de salvarguardar vidas que tienen mayor necesidad de ser atendidos, si bien es verdad que seria muy util saber en base a que necesitan atencion la mayor presicion nos permitiria atender la mayor cantidad de personas en riesgo sacrificando talvez velocidad de atencion ya que al poder tener mejor explicacion de el porque un paciente necesita atencion la logica diria que serian tratados de forma mas rapida pero esto al fin y acabo es desicion de un medico no del sistema. 
+
 > 
+
 
 ---
 
@@ -123,7 +132,10 @@ Para determinado pedido:
 Explique qué información adicional debería analizar.
 
 > **Respuesta:**  
+Se deberia analiza el nivel de confianza o probabilidad de cada predicción y el desempeño histórico de ambos modelos bajo condiciones similares. ya que no sabemos si uno esta considerando uno u otro no para que el resultado sea diferente, y pues el que este realizando mejor prediccion se veria una vez cuando la entrega pase y se vea que paso si sí si o sí no, para ver cual acerto
 > 
+
+
 
 ---
 
