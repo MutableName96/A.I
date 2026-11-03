@@ -116,6 +116,10 @@
 
   ┌────
 
+    1. si solo tengo q separar 2 cosas uso sigmode, para mas de 2 cosas usaria softmax 
+    2. son las probabilidades q regresa por cada clase q tiene
+    3. para reconocer img de varios tipos de flores usaria softmax porque hay mas de 2 clases a considerar o lo mismo para perros y gatos y humanos 
+
   └────
 
 
