@@ -50,7 +50,11 @@
 
   ┌────
 
-  └────
+    1. porque ya maneja 3 capas q permiten reconocer patrones mas complejos
+    2. es donde el modelo aprende los patrones mas complejjos
+    3. se comportaria como uno lineal, si quitamos la virtud de las acttividades no lineales perderiamos esa gran ventaja de reconocer patrones mas complejos  
+    
+   └────
 
 
 4 Pregunta 3 — XOR como lección histórica
@@ -66,6 +70,10 @@
 ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
 
   ┌────
+
+    1. q un perceptron s no puede resolver todos los problemas porq los resultados no se pueden separar por un linea recta
+    2. que ya no usamos siempre una linea recta para separar los datos con las capas ocultas podemos llegar a usar limites mas complicados por asi decirlo
+    3. no necesariamente solo servira cuando los datos no estan tan mezclados o q se pueden separar por una linea recta pues, problemas sencillos 
 
   └────
 
