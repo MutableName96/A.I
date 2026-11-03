@@ -94,6 +94,10 @@
 
   ┌────
 
+    1. es como jugar a las apuestas en un torneo primero haces una prediccion despues comparas tu respuesta con la correcta y en base a eso calcularias un error entonces modificarias los pesos q serian como los valores  q son mas importantes q tomaste en cuenta para predecir el resultado y repites
+    2.  controla los pesos ya que con un learning rate el modelo puede pasarse o muy bajo aprender muy lento esto nos da principalmente q tanto cambian los pesos de un epoca a otra
+    3. es como prepararse para el examen de ingreso a la facultad de medicina el subajuste seria cunado no estudias bien y no entiendes los temas del examen y el sobreajuste seria al contrario como si pagaras un curso milagroso q te diera segun todas las respuestas y tu las memorizas en lugar de comprender los temas q ya cuando haces un examen real con tantito q cambien la pregunta ya no la entiendas 
+
   └────
 
 
