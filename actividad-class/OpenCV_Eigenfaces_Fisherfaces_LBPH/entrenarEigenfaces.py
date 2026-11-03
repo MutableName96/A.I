@@ -66,3 +66,4 @@ print(f"\nEntrenamiento terminado.")
 print(f"Total de imágenes: {len(faces_data)}")
 print(f"Personas entrenadas: {len(label_names)}")
 print(f"Modelo guardado en: {ruta_modelo}")
+ 
