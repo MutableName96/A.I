@@ -9,9 +9,9 @@
 ══════════════════
 
   ━━━━━━━━━━━
-   Nombre    
+   Nombre    Antonio Lopez Martinez
    Grupo   A 
-   Fecha     
+   Fecha    03/11/26
   ━━━━━━━━━━━
 
 
@@ -28,6 +28,10 @@
 ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
 
   ┌────
+    
+    1. un perceptron recibe datos y estos datos los multiplica pos los pesos q en un inicio son aleatorios y le summa el bias o el sesgo para ayudarle a ajustar el resultado
+    2. literalmente que se pueden separar dos grupos de datos usando una linea recta, como separar peras de manzanaas
+    3. No puede resolver problemas mas complejos en donde los datos no se pueden separar por una linea recta es decir estan tan mezclados q el preceptron no puede clasificarlos
 
   └────
 
